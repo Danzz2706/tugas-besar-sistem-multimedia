@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
-import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
-import { db } from '../lib/firebase';
-import type { Subject, Module } from '../data/subjects';
+import type { Subject } from '../data/subjects';
 import { subjectsData } from '../data/subjects';
 
 export const useSubjects = () => {

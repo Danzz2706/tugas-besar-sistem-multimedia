@@ -1,5 +1,5 @@
 import type { Subject } from '../data/subjects';
-import { X, Trophy, Target, TrendingUp } from 'lucide-react';
+import { X, Trophy, TrendingUp } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 interface OverallProgressSidebarProps {
