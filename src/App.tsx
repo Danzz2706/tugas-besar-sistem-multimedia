@@ -8,9 +8,12 @@ import { GeometryExplorer } from './pages/GeometryExplorer';
 import { TeacherDashboard } from './pages/TeacherDashboard';
 import { ProtectedRoute } from './components/ProtectedRoute'; // Force refresh
 
+import { useFirestoreSync } from './hooks/useFirestoreSync';
 import { LandingPage } from './pages/LandingPage';
 
 function App() {
+  useFirestoreSync();
+
   return (
     <Router>
       <div className="min-h-screen bg-gray-50 dark:bg-neutral-900 transition-colors duration-300">

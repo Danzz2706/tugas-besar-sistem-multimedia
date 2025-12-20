@@ -46,6 +46,8 @@ interface AppState {
     markNotificationRead: (id: string) => void;
     saveQuizResult: (record: Omit<StudentRecord, 'id' | 'date'>) => void;
     markMaterialComplete: (id: string) => void;
+    setCompletedMaterials: (ids: string[]) => void;
+    setStudentRecords: (records: StudentRecord[]) => void;
 }
 
 export const useStore = create<AppState>()(
@@ -108,7 +110,9 @@ export const useStore = create<AppState>()(
                 markMaterialComplete: (id) => set((state) => {
                     if (state.completedMaterials.includes(id)) return {};
                     return { completedMaterials: [...state.completedMaterials, id] };
-                })
+                }),
+                setCompletedMaterials: (ids) => set({ completedMaterials: ids }),
+                setStudentRecords: (records) => set({ studentRecords: records })
             }
         },
         {

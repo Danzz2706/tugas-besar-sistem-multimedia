@@ -4,7 +4,7 @@ import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 
 export const useFirestoreSync = () => {
-    const { user, completedMaterials, studentRecords } = useStore();
+    const { user, completedMaterials, studentRecords, setCompletedMaterials, setStudentRecords } = useStore();
 
     // 1. Load data from Firestore on login
     useEffect(() => {
@@ -17,14 +17,14 @@ export const useFirestoreSync = () => {
 
                 if (userSnap.exists()) {
                     const data = userSnap.data();
-                    // Merge Firestore data with local store (optimistic update strategy could be complex, simple merge here)
-                    // Ideally, we'd have setCompletedMaterials / setStudentRecords actions
-                    // For now, we assume if Firestore has data, it's the truth.
-
-                    // Note: We need actions in useStore to BULK UPDATE, creating them if missing
-                    // Skipping bulk update for now as it requires store refactor.
-                    // We will just console log successfully connected.
                     console.log("Firestore User Data Loaded:", data);
+
+                    if (data.completedMaterials) {
+                        setCompletedMaterials(data.completedMaterials);
+                    }
+                    if (data.studentRecords) {
+                        setStudentRecords(data.studentRecords);
+                    }
                 }
             } catch (error) {
                 console.error("Error loading user data:", error);
@@ -42,10 +42,6 @@ export const useFirestoreSync = () => {
             try {
                 const userRef = doc(db, 'users', user.id);
                 await setDoc(userRef, {
-                    name: user.name,
-                    email: user.email,
-                    role: user.role,
-                    avatar: user.avatar || '',
                     completedMaterials,
                     studentRecords
                 }, { merge: true });
@@ -55,8 +51,8 @@ export const useFirestoreSync = () => {
             }
         };
 
-        // Debounce could be added here
-        const timeoutId = setTimeout(syncData, 2000);
+        // Debounce sync to avoid too many writes
+        const timeoutId = setTimeout(syncData, 1000);
         return () => clearTimeout(timeoutId);
-    }, [user, completedMaterials, studentRecords]);
+    }, [completedMaterials, studentRecords, user?.id]);
 };
