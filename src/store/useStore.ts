@@ -69,7 +69,15 @@ export const useStore = create<AppState>()(
                 increase: () => set((state) => ({ count: state.count + 1 })),
                 reset: () => set({ count: 0 }),
                 login: (user) => set({ user, isAuthenticated: true }),
-                logout: () => set({ user: null, isAuthenticated: false }),
+                logout: () => set({
+                    user: null,
+                    isAuthenticated: false,
+                    studentRecords: [],
+                    completedMaterials: [],
+                    notifications: [
+                        { id: '1', message: 'Selamat datang di EduConnect!', date: new Date().toISOString(), read: false, type: 'info' }
+                    ]
+                }),
                 toggleTheme: () => set((state) => {
                     const newTheme = state.theme === 'light' ? 'dark' : 'light';
                     if (newTheme === 'dark') {
