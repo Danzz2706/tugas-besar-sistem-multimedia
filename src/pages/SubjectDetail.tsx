@@ -304,14 +304,17 @@ export const SubjectDetail = () => {
                                     ></iframe>
                                 </div>
                             ) : activeMaterial.type === 'interactive' ? (
-                                <div className="aspect-video bg-black rounded-xl overflow-hidden mb-6 shadow-lg relative">
-                                    <iframe
-                                        width="100%"
-                                        height="100%"
-                                        src={activeMaterial.content as string}
-                                        title={activeMaterial.title}
-                                        className="absolute inset-0"
-                                    ></iframe>
+                                <div className="aspect-video bg-gray-900 rounded-xl overflow-hidden mb-6 shadow-lg relative flex flex-col items-center justify-center text-center p-6">
+                                    <Rocket className="w-16 h-16 text-blue-500 mb-4 animate-bounce" />
+                                    <h3 className="text-2xl font-bold text-white mb-2">Simulasi Interaktif</h3>
+                                    <p className="text-gray-400 mb-6 max-w-md">Materi ini memuat simulasi 3D yang berat. Untuk pengalaman terbaik, silakan buka dalam mode layar penuh.</p>
+                                    <button
+                                        onClick={() => navigate(activeMaterial.content as string)}
+                                        className="bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-8 rounded-full transition-all transform hover:scale-105 shadow-lg flex items-center gap-2"
+                                    >
+                                        <PlayCircle className="w-5 h-5" />
+                                        Mulai Simulasi
+                                    </button>
                                 </div>
                             ) : activeMaterial.type === 'text' ? (
                                 <div className="mb-8">

@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, Stars, Html } from "@react-three/drei";
 import * as THREE from 'three';
+import { ArrowLeft } from 'lucide-react';
 import { planetData } from "../data/solarSystem";
 // import { Howl } from "howler"; // Howler removed
 // Celestial Body Component
@@ -152,7 +153,12 @@ export const SolarSystem = () => {
                 </div>
 
                 <div className="flex gap-4 pointer-events-auto">
-                    {/* Buttons removed as requested */}
+                    <button
+                        onClick={() => window.history.back()}
+                        className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full text-white hover:bg-white/20 transition-colors border border-white/20"
+                    >
+                        <ArrowLeft className="w-4 h-4" /> Kembali
+                    </button>
                 </div>
             </div>
 
