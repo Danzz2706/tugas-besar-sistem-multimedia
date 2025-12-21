@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Dashboard } from './pages/Dashboard';
@@ -6,7 +6,7 @@ import { SolarSystem } from './pages/SolarSystem';
 import { SubjectDetail } from './pages/SubjectDetail'
 import { GeometryExplorer } from './pages/GeometryExplorer';
 import { TeacherDashboard } from './pages/TeacherDashboard';
-import { ProtectedRoute } from './components/ProtectedRoute'; // Force refresh
+import { ProtectedRoute } from './components/ProtectedRoute';
 
 import { useFirestoreSync } from './hooks/useFirestoreSync';
 import { LandingPage } from './pages/LandingPage';
@@ -67,4 +67,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
