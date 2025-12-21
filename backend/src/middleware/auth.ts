@@ -1,8 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import * as admin from 'firebase-admin';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { db } from '../config/firebase';
 
 // Add user property to Request interface
 declare global {
@@ -27,23 +25,13 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
         const decodedToken = await admin.auth().verifyIdToken(token);
         req.user = decodedToken;
 
-        // Sync user to PostgreSQL
-        // We do this here to ensure the user exists in our DB before any other operation
-        await prisma.user.upsert({
-            where: { id: decodedToken.uid },
-            update: {
-                email: decodedToken.email || '',
-                name: decodedToken.name || 'User',
-                avatar: decodedToken.picture || null,
-            },
-            create: {
-                id: decodedToken.uid,
-                email: decodedToken.email || '',
-                name: decodedToken.name || 'User',
-                role: 'student', // Default role
-                avatar: decodedToken.picture || null,
-            }
-        });
+        // Sync user to Firestore
+        await db.collection('users').doc(decodedToken.uid).set({
+            email: decodedToken.email || '',
+            name: decodedToken.name || 'User',
+            avatar: decodedToken.picture || null,
+            lastLogin: new Date().toISOString()
+        }, { merge: true });
 
         next();
     } catch (error) {

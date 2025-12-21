@@ -1,7 +1,6 @@
 import { useState, useRef } from 'react';
-import { X, Camera, Trophy, Clock, Database } from 'lucide-react';
+import { X, Camera, Trophy, Clock } from 'lucide-react';
 import { useStore } from '../store/useStore';
-import { seedDatabase } from '../utils/seedFirestore';
 
 export const SettingsModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
     const { user, updateProfile, studentRecords } = useStore();
@@ -118,20 +117,6 @@ export const SettingsModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: (
                             </button>
 
                             {/* Developer Tools / Database Sync */}
-                            <div className="pt-6 border-t border-gray-100 dark:border-neutral-700">
-                                <h3 className="text-sm font-bold text-gray-500 mb-3 uppercase tracking-wider">Developer Zone</h3>
-                                <button
-                                    onClick={async () => {
-                                        if (confirm("Upload data pelajaran ke database online? Data lama mungkin tertimpa.")) {
-                                            await seedDatabase();
-                                        }
-                                    }}
-                                    className="w-full py-3 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-900/20 dark:hover:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded-xl font-medium transition-colors flex items-center justify-center gap-2"
-                                >
-                                    <Database className="w-5 h-5" />
-                                    Sync / Upload Database
-                                </button>
-                            </div>
                         </div>
                     ) : (
                         <div className="space-y-4">

@@ -1,10 +1,16 @@
 import { doc, writeBatch } from "firebase/firestore";
-import { db } from "../lib/firebase";
+import { db, auth } from "../lib/firebase";
 import { subjectsData } from "../data/subjects";
 
 export const seedDatabase = async () => {
     try {
-        console.log("Starting seed...");
+        if (!auth.currentUser) {
+            alert("Error: You must be logged in to seed the database. Please waiting a few seconds for Firebase to initialize or re-login.");
+            console.error("Seed failed: No authenticated user found in Firebase SDK.");
+            return;
+        }
+
+        console.log("Starting seed as user:", auth.currentUser.uid);
         const batch = writeBatch(db);
 
         const subjectsList = Object.values(subjectsData);

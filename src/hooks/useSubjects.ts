@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import type { Subject } from '../data/subjects';
 import { subjectsData } from '../data/subjects';
+import { collection, doc, onSnapshot, getDocs } from 'firebase/firestore';
+import { db } from '../lib/firebase';
 
 export const useSubjects = () => {
     const [subjects, setSubjects] = useState<Subject[]>([]);
@@ -8,32 +10,39 @@ export const useSubjects = () => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        const fetchSubjects = async () => {
+        const subjectsRef = collection(db, 'subjects');
+
+        const unsubscribe = onSnapshot(subjectsRef, async (snapshot) => {
             try {
-                // Bypass API for now, use static data
-                const subjectsArray = Object.values(subjectsData);
-                setSubjects(subjectsArray);
+                const subjectsList: Subject[] = [];
 
-                /* 
-                // Original fetching logic
-                const response = await fetch('http://localhost:5000/api/subjects');
-                if (!response.ok) {
-                    throw new Error(`API Error: ${response.statusText}`);
+                for (const docSnapshot of snapshot.docs) {
+                    const subjectData = docSnapshot.data() as Omit<Subject, 'id' | 'modules'>;
+                    const modulesRef = collection(db, 'subjects', docSnapshot.id, 'modules');
+                    const modulesSnap = await getDocs(modulesRef);
+                    const modules = modulesSnap.docs.map(m => m.data());
+
+                    subjectsList.push({
+                        id: docSnapshot.id,
+                        ...subjectData,
+                        modules: modules as any[]
+                    } as Subject);
                 }
-                const data = await response.json();
-                setSubjects(data);
-                */
 
+                setSubjects(subjectsList);
+                setLoading(false);
             } catch (err: any) {
-                console.error("Error fetching subjects:", err);
+                console.error("Error syncing subjects:", err);
                 setError(err.message);
-                setSubjects([]);
-            } finally {
                 setLoading(false);
             }
-        };
+        }, (err) => {
+            console.error("Snapshot Error:", err);
+            setError(err.message);
+            setLoading(false);
+        });
 
-        fetchSubjects();
+        return () => unsubscribe();
     }, []);
 
     return { subjects, loading, error };
@@ -50,38 +59,43 @@ export const useSubject = (subjectId?: string) => {
             return;
         }
 
-        const fetchSubject = async () => {
+        const subjectRef = doc(db, 'subjects', subjectId);
+
+        const unsubscribe = onSnapshot(subjectRef, async (docSnapshot) => {
             try {
-                // Bypass API for now, use static data
-                if (subjectsData[subjectId]) {
-                    setSubject(subjectsData[subjectId]);
+                if (docSnapshot.exists()) {
+                    const subjectData = docSnapshot.data() as Omit<Subject, 'id' | 'modules'>;
+                    const modulesRef = collection(db, 'subjects', subjectId, 'modules');
+                    const modulesSnap = await getDocs(modulesRef);
+                    const modules = modulesSnap.docs.map(m => m.data());
+
+                    setSubject({
+                        id: docSnapshot.id,
+                        ...subjectData,
+                        modules: modules as any[]
+                    } as Subject);
+                    setError(null);
                 } else {
-                    throw new Error(`Subject not found`);
+                    if (subjectsData[subjectId]) {
+                        setSubject(subjectsData[subjectId]);
+                    } else {
+                        setError("Subject not found");
+                        setSubject(null);
+                    }
                 }
-
-                /*
-                // Original fetching logic
-                const response = await fetch(`http://localhost:5000/api/subjects/${subjectId}`);
-                if (!response.ok) {
-                    throw new Error(`Subject not found`);
-                }
-                const data = await response.json();
-                setSubject(data);
-                */
-
+                setLoading(false);
             } catch (err: any) {
-                console.error("Error fetching subject:", err);
+                console.error("Error syncing subject:", err);
                 setError(err.message);
-                // Fallback
-                if (subjectsData[subjectId]) {
-                    setSubject(subjectsData[subjectId]);
-                }
-            } finally {
                 setLoading(false);
             }
-        };
+        }, (err) => {
+            console.error("Subject Snapshot Error:", err);
+            setError(err.message);
+            setLoading(false);
+        });
 
-        fetchSubject();
+        return () => unsubscribe();
     }, [subjectId]);
 
     return { subject, loading, error };

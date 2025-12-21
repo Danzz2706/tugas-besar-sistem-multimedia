@@ -4,7 +4,7 @@ import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 
 export const useFirestoreSync = () => {
-    const { user, completedMaterials, studentRecords, setCompletedMaterials, setStudentRecords } = useStore();
+    const { user, completedMaterials, studentRecords, setCompletedMaterials, setStudentRecords, updateProfile } = useStore();
 
     // 1. Load data from Firestore on login
     useEffect(() => {
@@ -25,6 +25,10 @@ export const useFirestoreSync = () => {
                     if (data.studentRecords) {
                         setStudentRecords(data.studentRecords);
                     }
+                    // Sync Profile Data
+                    if (data.name || data.avatar) {
+                        updateProfile(data.name || user.name, data.avatar || user.avatar);
+                    }
                 }
             } catch (error) {
                 console.error("Error loading user data:", error);
@@ -32,7 +36,7 @@ export const useFirestoreSync = () => {
         };
 
         loadUserData();
-    }, [user?.id]);
+    }, [user?.id]); // Only run when user ID changes (login)
 
     // 2. Sync changes to Firestore
     useEffect(() => {
@@ -42,6 +46,8 @@ export const useFirestoreSync = () => {
             try {
                 const userRef = doc(db, 'users', user.id);
                 await setDoc(userRef, {
+                    name: user.name || '',
+                    avatar: user.avatar || null,
                     completedMaterials,
                     studentRecords
                 }, { merge: true });
@@ -54,5 +60,5 @@ export const useFirestoreSync = () => {
         // Debounce sync to avoid too many writes
         const timeoutId = setTimeout(syncData, 1000);
         return () => clearTimeout(timeoutId);
-    }, [completedMaterials, studentRecords, user?.id]);
+    }, [completedMaterials, studentRecords, user?.name, user?.avatar, user?.id]);
 };

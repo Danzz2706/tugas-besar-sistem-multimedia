@@ -5,7 +5,7 @@ export const planetData = [
         size: 2.5,
         distance: 0,
         speed: 0,
-        description: "Matahari adalah bintang di pusat Tata Surya. Hampir seluruh massa Tata Surya terkumpul di sini.",
+        description: "Matahari adalah bintang katai kuning di pusat Tata Surya, bola gas raksasa dari hidrogen dan helium yang sangat panas, berfungsi sebagai sumber utama cahaya dan energi bagi kehidupan di Bumi melalui reaksi fusi nuklir di intinya. Gravitasinya menjaga planet-planet tetap dalam orbit, sementara permukaannya memancarkan energi dalam bentuk cahaya dan panas yang vital untuk fotosintesis dan menjaga iklim, menjadikannya inti kehidupan dan pengatur seluruh Tata Surya.",
         fact: "Suhu inti Matahari mencapai 15 juta derajat Celcius.",
         sound: "sun_sound_url_placeholder"
     },

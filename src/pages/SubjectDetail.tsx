@@ -44,7 +44,7 @@ export const SubjectDetail = () => {
     const navigate = useNavigate();
     const { subject, loading, error } = useSubject(subjectId);
     const [activeMaterial, setActiveMaterial] = useState<Material | null>(null);
-    const { completedMaterials, markMaterialComplete } = useStore();
+    const { completedMaterials, markMaterialComplete, studentRecords } = useStore();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isProgressOpen, setIsProgressOpen] = useState(false);
 
@@ -67,39 +67,47 @@ export const SubjectDetail = () => {
         return !completedMaterials.includes(prevMaterial.id);
     };
 
-    const handleMaterialComplete = () => {
+    const markCurrentMaterialAsDone = () => {
         if (activeMaterial) {
             markMaterialComplete(activeMaterial.id);
+        }
+    };
 
-            // Auto advance
-            // Find current indices
-            let currentModuleIdx = -1;
-            let currentMatIdx = -1;
+    const goToNextMaterial = () => {
+        if (!activeMaterial) return;
 
-            subject?.modules.forEach((mod, mIdx) => {
-                mod.materials.forEach((mat, matIdx) => {
-                    if (mat.id === activeMaterial.id) {
-                        currentModuleIdx = mIdx;
-                        currentMatIdx = matIdx;
-                    }
-                });
+        // Find current indices
+        let currentModuleIdx = -1;
+        let currentMatIdx = -1;
+
+        subject?.modules.forEach((mod, mIdx) => {
+            mod.materials.forEach((mat, matIdx) => {
+                if (mat.id === activeMaterial.id) {
+                    currentModuleIdx = mIdx;
+                    currentMatIdx = matIdx;
+                }
             });
+        });
 
-            if (currentModuleIdx !== -1 && currentMatIdx !== -1) {
-                // Try next material in same module
-                const nextMatSameModule = subject?.modules[currentModuleIdx].materials[currentMatIdx + 1];
-                if (nextMatSameModule) {
-                    setActiveMaterial(nextMatSameModule);
-                    return;
-                }
+        if (currentModuleIdx !== -1 && currentMatIdx !== -1) {
+            // Try next material in same module
+            const nextMatSameModule = subject?.modules[currentModuleIdx].materials[currentMatIdx + 1];
+            if (nextMatSameModule) {
+                setActiveMaterial(nextMatSameModule);
+                return;
+            }
 
-                // Try first material of next module
-                const nextModule = subject?.modules[currentModuleIdx + 1];
-                if (nextModule && nextModule.materials.length > 0) {
-                    setActiveMaterial(nextModule.materials[0]);
-                }
+            // Try first material of next module
+            const nextModule = subject?.modules[currentModuleIdx + 1];
+            if (nextModule && nextModule.materials.length > 0) {
+                setActiveMaterial(nextModule.materials[0]);
             }
         }
+    };
+
+    const handleMaterialComplete = () => {
+        markCurrentMaterialAsDone();
+        goToNextMaterial();
     };
 
     if (loading) {
@@ -339,19 +347,28 @@ export const SubjectDetail = () => {
                                 <GenericQuiz
                                     quizTitle={activeMaterial.title}
                                     questions={typeof activeMaterial.content === 'string' ? [] : activeMaterial.content}
+                                    initialResult={studentRecords.find(r => r.quizTitle === activeMaterial.title)}
                                     onClose={() => {
-                                        // Optional: Do something on close
+                                        goToNextMaterial();
                                     }}
                                     onComplete={() => {
-                                        handleMaterialComplete();
+                                        markCurrentMaterialAsDone();
                                     }}
                                 />
+                            ) : activeMaterial.type === 'pdf' ? (
+                                <div className="h-[800px] bg-gray-100 dark:bg-neutral-900 rounded-xl overflow-hidden border border-gray-200 dark:border-neutral-700">
+                                    <iframe
+                                        src={activeMaterial.content as string}
+                                        className="w-full h-full"
+                                        title="PDF Viewer"
+                                    />
+                                </div>
                             ) : null}
 
-                            <div className="prose dark:prose-invert max-w-none">
+                            <div className="prose dark:prose-invert max-w-none mt-8">
                                 <h3 className="text-xl font-bold mb-2">Deskripsi Materi</h3>
                                 <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
-                                    {activeMaterial.description || (typeof activeMaterial.content === 'string' ? activeMaterial.content : '')}
+                                    {activeMaterial.description || (typeof activeMaterial.content === 'string' && activeMaterial.type !== 'pdf' ? activeMaterial.content : '')}
                                 </p>
 
                                 {activeMaterial.type === 'video' && (

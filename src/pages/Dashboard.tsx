@@ -11,6 +11,8 @@ import { OverallProgressSidebar } from '../components/OverallProgressSidebar';
 import { Loader2, Flag, Palette } from 'lucide-react';
 
 import { useFirestoreSync } from '../hooks/useFirestoreSync';
+import { seedDatabase } from '../utils/seedFirestore';
+import { LogoutModal } from '../components/LogoutModal';
 
 export const Dashboard = () => {
     const { user, logout, notifications, markNotificationRead, completedMaterials } = useStore()
@@ -19,7 +21,13 @@ export const Dashboard = () => {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const [isNotifOpen, setIsNotifOpen] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [isLogoutOpen, setIsLogoutOpen] = useState(false);
     const { subjects, loading } = useSubjects();
+
+    const handleLogoutConfirm = () => {
+        logout();
+        navigate('/');
+    };
 
     // Protect Route
     useEffect(() => {
@@ -51,6 +59,11 @@ export const Dashboard = () => {
     return (
         <div className="flex h-screen bg-gray-50 dark:bg-neutral-900 text-gray-900 dark:text-white overflow-hidden font-sans transition-colors duration-300">
             <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
+            <LogoutModal
+                isOpen={isLogoutOpen}
+                onClose={() => setIsLogoutOpen(false)}
+                onConfirm={handleLogoutConfirm}
+            />
 
             {/* Mobile Sidebar Overlay */}
             {isSidebarOpen && (
@@ -96,7 +109,7 @@ export const Dashboard = () => {
                 <div className="mt-auto pt-6 border-t border-gray-200 dark:border-neutral-700">
                     <ProfileDropdown
                         user={user}
-                        onLogout={() => { logout(); navigate('/') }}
+                        onLogout={() => setIsLogoutOpen(true)}
                         onSettingsClick={() => setIsSettingsOpen(true)}
                         align="bottom-left"
                         trigger={
@@ -128,7 +141,7 @@ export const Dashboard = () => {
                     <span className="font-bold text-lg text-blue-600 dark:text-white">EduConnect</span>
                     <ProfileDropdown
                         user={user}
-                        onLogout={() => { logout(); navigate('/') }}
+                        onLogout={() => setIsLogoutOpen(true)}
                         onSettingsClick={() => setIsSettingsOpen(true)}
                         align="right"
                         trigger={
@@ -149,6 +162,12 @@ export const Dashboard = () => {
                         <p className="text-gray-500 dark:text-gray-400">Siap untuk belajar hari ini?</p>
                     </div>
                     <div className="flex items-center gap-4">
+                        <button
+                            onClick={seedDatabase}
+                            className="text-xs bg-indigo-100 text-indigo-700 px-3 py-2 rounded-lg hover:bg-indigo-200 transition-colors"
+                        >
+                            Seed DB
+                        </button>
                         <ThemeToggle />
                         <div className="relative">
                             <button

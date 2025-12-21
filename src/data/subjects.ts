@@ -12,7 +12,7 @@ import {
 export interface Material {
     id: string;
     title: string;
-    type: 'video' | 'quiz' | 'interactive' | 'text';
+    type: 'video' | 'quiz' | 'interactive' | 'text' | 'pdf';
     content: string | any[]; // URL for video, quiz ID, or raw text, or Question[]
     description?: string;
     thumbnail?: string;
@@ -157,8 +157,8 @@ export const subjectsData: Record<string, Subject> = {
                     {
                         id: "mat-ipa-sol-ebook-1",
                         title: "E-Book: Menjelajah Angkasa Luar",
-                        type: "text",
-                        content: "Modul ini berisi materi lengkap tentang Sistem Tata Surya untuk Kelas 6 Tema 9 Subtema 1 (Keteraturan yang Menakjubkan).\n\nDalam modul ini, kamu akan mempelajari:\n1. Matahari sebagai pusat tata surya.\n2. Karakteristik 8 planet (Merkurius hingga Neptunus).\n3. Benda langit lainnya seperti asteroid, komet, dan meteor.\n4. Keteraturan orbit planet dalam mengelilingi Matahari.\n\n[Klik di sini untuk membaca Modul Lengkap (PDF)](https://repositori.kemendikdasmen.go.id/22928/1/691.%20%5BWEB%5D%20Modul%20Siswa%20Kelas%206%20Tema%209%20Subtema%201.pdf)",
+                        type: "pdf",
+                        content: "/modules/691. [WEB] Modul Siswa Kelas 6 Tema 9 Subtema 1.pdf",
                         description: "Modul resmi Kemendikbud: Keteraturan yang Menakjubkan.",
                         duration: "10 min baca"
                     }
