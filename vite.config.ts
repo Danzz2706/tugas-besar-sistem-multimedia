@@ -39,4 +39,17 @@ export default defineConfig({
       }
     })
   ],
+  ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          firebase: ['firebase/app', 'firebase/auth', 'firebase/firestore', 'firebase/storage', 'firebase/database'],
+          ai: ['@google/generative-ai', 'firebase/ai'],
+          ui: ['lucide-react', 'framer-motion']
+        }
+      }
+    }
+  }
 })
