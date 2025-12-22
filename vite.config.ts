@@ -41,7 +41,7 @@ export default defineConfig({
     tailwindcss(),
     pwaPlugin,
   ],
-  base: "/tugas-besar-sistem-multimedia/",
+  base: process.env.VERCEL === '1' ? "/" : "/tugas-besar-sistem-multimedia/",
   build: {
     rollupOptions: {
       output: {
