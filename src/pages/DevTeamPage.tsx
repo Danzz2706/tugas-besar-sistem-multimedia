@@ -1,6 +1,8 @@
 import { LandingNavbar } from '../components/LandingNavbar';
 import { LandingFooter } from '../components/LandingFooter';
 import { Github, Instagram, Linkedin, Code, Palette, Terminal, Database } from 'lucide-react';
+import ZaidanImg from '../assets/ZAIDAN.jpg';
+import ChengHoImg from '../assets/CHENGHO.jpeg';
 
 export const DevTeamPage = () => {
     return (
@@ -35,7 +37,7 @@ export const DevTeamPage = () => {
                             name="Zaidan Kamil Munadi"
                             role="Back End Developer"
                             id="103032430014"
-                            imageUrl="/src/assets/ZAIDAN.jpg"
+                            imageUrl={ZaidanImg}
                             description="Mahasiswa Telkom University yang berfokus pada pengembangan sistem server yang handal dan aman. Bertanggung jawab atas logika bisnis, database, dan integrasi API EduConnect."
                             skills={["Node.js", "Express", "Firebase", "PostgreSQL", "System Design"]}
                             socials={{
@@ -52,7 +54,7 @@ export const DevTeamPage = () => {
                             name="Muhammad Cheng Ho Pulungan"
                             role="Front End Developer"
                             id="103032400146"
-                            imageUrl="/src/assets/CHENGHO.jpeg"
+                            imageUrl={ChengHoImg}
                             description="Mahasiswa Telkom University dengan passion di bidang UI/UX. Merancang antarmuka pengguna yang intuitif, estetis, dan responsif untuk memberikan pengalaman belajar terbaik."
                             skills={["React", "TypeScript", "Tailwind CSS", "Framer Motion", "UI/UX"]}
                             socials={{
