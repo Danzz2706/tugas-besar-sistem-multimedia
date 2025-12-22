@@ -11,7 +11,7 @@ import { OverallProgressSidebar } from '../components/OverallProgressSidebar';
 import { Loader2, Flag, Palette } from 'lucide-react';
 
 import { useFirestoreSync } from '../hooks/useFirestoreSync';
-import { seedDatabase } from '../utils/seedFirestore';
+// import { seedDatabase } from '../utils/seedFirestore';
 import { LogoutModal } from '../components/LogoutModal';
 
 export const Dashboard = () => {
@@ -162,12 +162,6 @@ export const Dashboard = () => {
                         <p className="text-gray-500 dark:text-gray-400">Siap untuk belajar hari ini?</p>
                     </div>
                     <div className="flex items-center gap-4">
-                        <button
-                            onClick={seedDatabase}
-                            className="text-xs bg-indigo-100 text-indigo-700 px-3 py-2 rounded-lg hover:bg-indigo-200 transition-colors"
-                        >
-                            Seed DB
-                        </button>
                         <ThemeToggle />
                         <div className="relative">
                             <button

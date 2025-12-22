@@ -10,6 +10,11 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 
 import { useFirestoreSync } from './hooks/useFirestoreSync';
 import { LandingPage } from './pages/LandingPage';
+import { PricingPage } from './pages/PricingPage';
+import { BlogPage } from './pages/BlogPage';
+import { DevTeamPage } from './pages/DevTeamPage';
+
+import { Chatbot } from './components/Chatbot';
 
 function App() {
   useFirestoreSync();
@@ -17,8 +22,12 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen bg-gray-50 dark:bg-neutral-900 transition-colors duration-300">
+        <Chatbot />
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/pricing" element={<PricingPage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/dev-teams" element={<DevTeamPage />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route
