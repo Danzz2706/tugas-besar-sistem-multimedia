@@ -14,6 +14,9 @@ export default defineConfig({
       devOptions: {
         enabled: true
       },
+      workbox: {
+        maximumFileSizeToCacheInBytes: 4 * 1024 * 1024, // 4MB
+      },
       manifest: {
         name: 'EduConnect - Belajar Jadi Lebih Seru',
         short_name: 'EduConnect',
