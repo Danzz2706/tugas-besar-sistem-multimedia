@@ -39,7 +39,7 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
-    pwaPlugin
+    pwaPlugin,
   ],
   build: {
     rollupOptions: {
