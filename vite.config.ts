@@ -39,8 +39,9 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
-    pwaPlugin
+    pwaPlugin,
   ],
+  base: "/tugas-besar-sistem-multimedia/",
   build: {
     rollupOptions: {
       output: {
@@ -48,7 +49,7 @@ export default defineConfig({
           vendor: ['react', 'react-dom', 'react-router-dom'],
           firebase: ['firebase/app', 'firebase/auth', 'firebase/firestore', 'firebase/storage', 'firebase/database'],
           ai: ['@google/generative-ai', 'firebase/ai'],
-          ui: ['lucide-react', 'framer-motion']
+          ui: ['lucide-react']
         }
       }
     }
