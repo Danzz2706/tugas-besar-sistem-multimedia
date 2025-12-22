@@ -39,7 +39,6 @@ export default defineConfig({
       }
     })
   ],
-  ],
   build: {
     rollupOptions: {
       output: {
@@ -51,5 +50,5 @@ export default defineConfig({
         }
       }
     }
-  }
-})
+  },
+});
