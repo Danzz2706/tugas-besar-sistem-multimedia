@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/tugas-besar-sistem-multimedia/sw.js', { scope: '/tugas-besar-sistem-multimedia/' })})}
