@@ -1,0 +1,85 @@
+# 📖 Panduan Penggunaan InteractStudy
+
+Selamat datang di **InteractStudy**! Dokumen ini akan memandu Anda dalam menggunakan fitur-fitur yang tersedia di aplikasi.
+
+## 📑 Daftar Isi
+1. [Memulai (Registrasi & Login)](#1-memulai-registrasi--login)
+2. [Dashboard Utama](#2-dashboard-utama)
+3. [Fitur Pembelajaran Interaktif](#3-fitur-pembelajaran-interaktif)
+   - [Tata Surya 3D](#tata-surya-3d)
+   - [Eksplorasi Geometri](#eksplorasi-geometri)
+4. [Mengakses Materi](#4-mengakses-materi)
+5. [Fitur Tambahan](#5-fitur-tambahan)
+
+---
+
+## 1. Memulai (Registrasi & Login)
+
+### Registrasi Akun Baru
+1. Buka halaman utama aplikasi.
+2. Klik tombol **"Daftar"** atau **"Mulai Sekarang"**.
+3. Isi formulir pendaftaran dengan Nama Lengkap, Email, dan Password.
+4. Pilih peran Anda (masuk sebagai **Siswa** secara default, hubungi admin untuk akses Guru).
+5. Klik **Daftar**.
+
+### Login
+1. Jika sudah punya akun, klik menu **"Masuk"**.
+2. Masukkan Email dan Password.
+3. Klik tombol **Masuk**.
+
+---
+
+## 2. Dashboard Utama
+
+Setelah berhasil login, Anda akan diarahkan ke Dashboard.
+- **Ringkasan Progres**: Lihat level Anda saat ini, poin yang dikumpulkan, dan lencana pencapaian.
+- **Mata Pelajaran**: Daftar mata pelajaran yang tersedia (Misal: IPA, Matematika).
+- **Aktivitas Terbaru**: Riwayat pembelajaran terakhir Anda.
+
+---
+
+## 3. Fitur Pembelajaran Interaktif
+
+### Tata Surya 3D
+Fitur ini memungkinkan Anda menjelajahi sistem tata surya secara visual.
+- **Akses**: Klik menu "Solar System" di dashboard.
+- **Navigasi**:
+  - **Klik & Tahan (Kiri)**: Putar kamera mengelilingi objek.
+  - **Scroll Mouse**: Zoom in / Zoom out.
+  - **Klik Planet**: Melihat informasi detail tentang planet tersebut.
+- **Kuis**: Tantang diri Anda dengan kuis interaktif setelah mempelajari materi.
+
+### Eksplorasi Geometri
+Belajar bangun ruang dan datar dengan model 3D.
+- **Akses**: Klik menu "Geometry Explorer".
+- **Interaksi**: Pilih bentuk geometri untuk melihat sifat-sifatnya (sisi, sudut, rumus volume/luas).
+
+---
+
+## 4. Mengakses Materi
+
+1. Di Dashboard, pilih **Kartu Mata Pelajaran** (misal: "IPA").
+2. Anda akan masuk ke halaman **Detail Mata Pelajaran**.
+3. Di sini Anda dapat melihat:
+   - **Video Pembelajaran**: Tonton video penjelasan.
+   - **E-Book / Modul**: Baca materi teks atau PDF.
+   - **Kuis**: Kerjakan latihan soal terkait topik tersebut.
+
+---
+
+## 5. Fitur Tambahan
+
+### 🤖 AI Chatbot
+Butuh bantuan cepat?
+- Klik ikon **Chat** di pojok kanan bawah layar.
+- Ketik pertanyaan Anda seputar materi pelajaran.
+- AI akan memberikan jawaban instan untuk membantu Anda belajar.
+
+### 🏆 Gamifikasi
+- **Poin**: Dapatkan poin setiap kali menyelesaikan materi atau kuis.
+- **Level**: Naikkan level Anda dengan mengumpulkan XP.
+- **Leaderboard**: Bersainglah dengan teman sekelas untuk menjadi yang terbaik!
+
+---
+
+*Selamat Belajar dengan Menyenangkan di InteractStudy!* 🚀
